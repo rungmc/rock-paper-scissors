@@ -1,5 +1,30 @@
 <!DOCTYPE html>
 <html>
     <meta charset="UTF-8">
+    <head><link rel="stylesheet" href="style.css"></head>
+    <main>
+        <h1>Rock-Paper-Scissors</h1>
+        <h2>A simple exercise done for The Odin Project.</h2>
+
+        <div class="explain">Rounds remaining:</div>
+        <div id="rounds">5</div>
+
+        <div class="explain">Make your selection:</div>
+        <div id="btncontainer">
+            <button class="rps" id="rock">Rock</button>
+            <button class="rps" id="paper">Paper</button>
+            <button class="rps" id="scissors">Scissors</button>
+        </div>
+
+        <div class="explain">Computer plays:</div>
+        <div id="computer">n/a</div>
+
+        <div class="explain">Round Result:</div>
+        <div id="result">n/a</div>
+
+        <div class="explain">Running Score:</div>
+        <div id="score">Wins - 0, Losses - 0, Draws - 0</div>
+        <div class="explain" id="final"></div>
+    </main>
     <script src="rps.js"></script>
 </html>

@@ -1,3 +1,8 @@
+let rounds = 5;
+let win = 0;
+let lose = 0;
+let draws = 0;
+
 function computerPlay(){
     let choice = Math.random() * (3);
 
@@ -14,16 +19,38 @@ function computerPlay(){
 
 function playRound(playerSelection, computerSelection){
     if (playerSelection.toLowerCase() === computerSelection.toLowerCase()){
+        draws++;
         return 'Draw!';
     }
     else if (playerSelection.toLowerCase() === 'rock'){
-        return (computerSelection === 'Scissors') ? 'You Win! Rock beats Scissors' : 'You Lose! Paper beats Rock';
+        if (computerSelection === 'Scissors'){
+            win++;
+            return 'You Win! Rock beats Scissors'
+        }
+        else{
+            lose++;
+            return 'You Lose! Paper beats Rock';
+        }
     }
     else if (playerSelection.toLowerCase() === 'paper'){
-        return (computerSelection === 'Rock') ? 'You Win! Paper beats Rock' : 'You Lose! Scissors beats Paper';
+        if (computerSelection === 'Rock'){
+            win++;
+            return 'You Win! Paper beats Rock'
+        }
+        else{
+            lose++;
+            return 'You Lose! Scissors beats Paper';
+        }
     }
     else if(playerSelection.toLowerCase() === 'scissors'){
-        return (computerSelection === 'Paper') ? 'You Win! Scissors beats Paper' : 'You Lose! Rock beats Scissors';
+        if (computerSelection === 'Paper'){
+            win++;
+            return 'You Win! Scissors beats Paper'
+        }
+        else{
+            lose++;
+            return 'You Lose! Rock beats Scissors';
+        }
     }
     else {
         return 'Invalid play!';
@@ -31,29 +58,47 @@ function playRound(playerSelection, computerSelection){
 
 }
 
-function game(rounds = 5){
-    let wins = 0;
-    let losses = 0;
+const roundCounter = document.querySelector('#rounds');
+const buttons = document.querySelectorAll('.rps');
+const computer = document.querySelector('#computer');
+const result = document.querySelector('#result');
+const score = document.querySelector('#score');
+const final = document.querySelector('#final');
 
-    for (let i = 0; i < rounds; i++){
-        let playerSelection = prompt('What are you throwing?');
-        let computerSelection = computerPlay();
-        if (playRound(playerSelection, computerSelection).slice(4,7) === 'Win'){
-            wins++;
-        }
-        else if (playRound(playerSelection, computerSelection).slice(4,8) === 'Lose'){
-            losses++;
-        }
-        console.log(playRound(playerSelection, computerSelection));
-    }
+function reset(){
+    rounds = 5;
+    win = 0;
+    lose = 0;
+    draws = 0;
 
-    if (wins > losses){
-        console.log('You won with a score of ' + wins + ' - ' + losses);
-    }
-    else if (losses > wins){
-        console.log('You lost with a score of ' + wins + ' - ' + losses);
-    }
-    else {
-        console.log('You tied with a score of ' + wins + ' - ' + losses);
-    }
+    roundCounter.innerText = rounds;
+    computer.innerText = 'n/a';
+    result.innerText = 'n/a';
+    score.innerText = 'Wins - 0, Losses - 0, Draws - 0';
+    final.innerText = '';
 }
+
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        if (rounds > 0){
+            const cpuPlay = computerPlay();
+            computer.innerText = cpuPlay;
+            result.innerText = playRound(button.id,cpuPlay);
+                
+            rounds--;
+            roundCounter.innerText = rounds;
+            score.innerText = `Wins - ${win}, Losses - ${lose}, Draws - ${draws}`;
+        }
+
+        if (rounds == 0) {
+            roundCounter.innerHTML = '<button id="reset">Play Again</button>';
+            roundCounter.addEventListener('click', () => {
+                reset();
+            });
+
+            if(win > lose) final.innerText = 'You won!';
+            else if(lose > win) final.innerText = 'You lost!';
+            else final.innerText = 'It was a tie!';
+        }
+    });
+});
