@@ -1,3 +1,3 @@
 # rock-paper-scissors
 
-The Odin Project - Rock Paper Scissors
+A simply rock, paper, scissors game completed as part of The Odin Project.
